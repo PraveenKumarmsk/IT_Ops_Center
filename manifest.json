@@ -1,0 +1,43 @@
+{
+  "id": "/index.html",
+  "name": "IT Ops Center · Network Engineer Workspace",
+  "short_name": "IT Ops",
+  "description": "Network engineer workspace: Cisco & Linux commands, subnet tools, Network Planner Pro, tickets, knowledge base and interview practice.",
+  "lang": "en",
+  "dir": "ltr",
+  "start_url": "./index.html?source=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0b0f17",
+  "theme_color": "#0b0f17",
+  "categories": ["productivity", "education", "utilities"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Mock Tests",
+      "short_name": "Mock Tests",
+      "description": "Open the interview quiz / mock test",
+      "url": "./index.html?page=interview&section=mock&source=shortcut",
+      "icons": [
+        { "src": "icons/shortcut-mock-96.png", "sizes": "96x96", "type": "image/png" },
+        { "src": "icons/shortcut-mock.svg", "sizes": "any", "type": "image/svg+xml" }
+      ]
+    },
+    {
+      "name": "Daily Practice",
+      "short_name": "Daily Practice",
+      "description": "Open the 60-second subnetting practice game",
+      "url": "./index.html?page=interview&section=daily&source=shortcut",
+      "icons": [
+        { "src": "icons/shortcut-daily-96.png", "sizes": "96x96", "type": "image/png" },
+        { "src": "icons/shortcut-daily.svg", "sizes": "any", "type": "image/svg+xml" }
+      ]
+    }
+  ]
+}
