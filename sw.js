@@ -1,5 +1,5 @@
 /* IT Ops Center — Service Worker */
-const VERSION = 'v1';
+const VERSION = 'v2';
 const CORE_CACHE = 'itops-core-' + VERSION;
 const RUNTIME_CACHE = 'itops-runtime-' + VERSION;
 
