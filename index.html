@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>IT Ops Center · Network Engineer Workspace</title>
 <meta name="description" content="Network engineer workspace: Cisco & Linux commands, subnet tools, Network Planner Pro, tickets and interview practice.">
-<meta name="theme-color" content="#0b0f17">
+<meta name="theme-color" content="#1e40af">
+<script>(function(){try{var a=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;if(a)document.documentElement.classList.add('is-app');}catch(e){}})();</script>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
@@ -184,9 +185,105 @@ tr:hover td{background:var(--surface-light);}
   body{background:#fff!important;color:#000!important;}
   .section,.tool-card,.result-box,.code-block{border-color:#ccc!important;background:#fff!important;color:#000!important;}
 }
+
+/* ============================================================
+   PHONE-APP LAYER (PWA)  — phone/installed = app, PC browser = website
+   ============================================================ */
+html{-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+body{overscroll-behavior-y:none;}
+.diagram-node{touch-action:none;}
+.app-title,.bottom-nav,.more-sheet,.sheet-backdrop,.install-banner,#splash{display:none;}
+#splash{position:fixed;top:0;left:0;right:0;bottom:0;z-index:1000;background:linear-gradient(160deg,#0b0f17 0%,#1e3a8a 100%);flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity .4s ease,visibility .4s;}
+html.is-app #splash{display:flex;}
+#splash.hide{opacity:0;visibility:hidden;}
+.splash-logo{width:96px;height:96px;border-radius:28px;background:var(--accent);color:#fff;font-size:46px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 60px var(--accent-glow);animation:splashPop .6s ease both;}
+@keyframes splashPop{from{transform:scale(.6);opacity:0;}to{transform:scale(1);opacity:1;}}
+.splash-name{font-size:1.8rem;font-weight:800;color:#fff;letter-spacing:-.5px;}
+.splash-name span{color:#60a5fa;}
+.splash-sub{font-size:.75rem;color:#9aaebf;letter-spacing:1.5px;text-transform:uppercase;}
+html.is-app body{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;}
+html.is-app input,html.is-app textarea,html.is-app select,html.is-app .code-block,html.is-app .result-box{user-select:text;-webkit-user-select:text;}
+
+@media(max-width:900px){
+  .sidebar,.mobile-menu-btn,.avatar{display:none!important;}
+  .main{margin-left:0;}
+  :root{--card-radius:20px;}
+
+  .topbar{padding:calc(env(safe-area-inset-top,0px) + 12px) 16px 16px;background:linear-gradient(135deg,#1e40af 0%,#3b82f6 100%);border-bottom:none;border-radius:0 0 28px 28px;box-shadow:0 10px 28px rgba(37,99,235,.35);gap:12px;}
+  .app-title{display:flex;align-items:center;gap:10px;flex:1;min-width:0;color:#fff;font-size:1.3rem;font-weight:800;letter-spacing:-.4px;}
+  .app-title .logo-icon{width:36px;height:36px;font-size:16px;background:rgba(255,255,255,.2);box-shadow:none;flex-shrink:0;}
+  #appTitleText{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .top-actions{gap:10px;}
+  .theme-toggle{background:rgba(255,255,255,.2);border:none;color:#fff;width:42px;height:42px;}
+  .search-wrapper{order:3;flex:1 1 100%;max-width:none;}
+  .search-wrapper input{border:none;background:rgba(255,255,255,.96);color:#1e2a3a;height:46px;font-size:16px;}
+  .search-wrapper i{color:#5e6f84;}
+
+  .content{padding:20px 16px calc(104px + env(safe-area-inset-bottom,0px));gap:20px;}
+  .page-title{font-size:1.5rem;font-weight:800;flex-wrap:wrap;gap:8px;}
+  .section{padding:18px;border-radius:22px;}
+  .section-header h2{font-size:1.1rem;}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:12px;}
+  .stat-card{padding:16px;border-radius:20px;}
+  .stat-value{font-size:1.7rem;font-weight:800;}
+  .dashboard-grid{grid-template-columns:repeat(2,1fr);gap:12px;}
+  .dash-card{padding:16px;border-radius:22px;gap:6px;}
+  .dash-icon{width:50px;height:50px;border-radius:16px;font-size:1.3rem;background:linear-gradient(135deg,var(--accent),#6366f1);color:#fff;box-shadow:0 6px 16px var(--accent-glow);}
+  .dash-title{font-weight:800;font-size:.95rem;}
+  .dash-desc{font-size:.72rem;}
+  .tools-grid{grid-template-columns:1fr;}
+  .tool-card{border-radius:18px;}
+  .btn{min-height:42px;border-radius:12px;font-weight:600;}
+  .btn-sm{min-height:34px;}
+  .form-group input,.form-group select,.form-group textarea,.mini-input,.ai-input-wrapper input{font-size:16px;}
+  .btn:active,.dash-card:active,.troubleshoot-item:active,.stat-card:active,.sheet-tile:active{transform:scale(.97);}
+  .troubleshoot-grid{grid-template-columns:repeat(2,1fr);}
+
+  /* modals become bottom sheets */
+  .modal-overlay{align-items:flex-end;padding:0;}
+  .modal{max-width:none;border-radius:26px 26px 0 0;max-height:90vh;padding:24px 20px calc(24px + env(safe-area-inset-bottom,0px));border-bottom:none;animation:sheetUp .28s ease;}
+  @keyframes sheetUp{from{transform:translateY(100%);}to{transform:none;}}
+
+  /* toasts sit above the bottom bar */
+  body > div[style*="bottom: 20px"]{bottom:calc(100px + env(safe-area-inset-bottom,0px))!important;}
+
+  /* bottom navigation */
+  .bottom-nav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--border);padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));justify-content:space-around;box-shadow:0 -10px 30px rgba(0,0,0,.25);}
+  .bn-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:4px 0;background:none;border:none;color:var(--text-secondary);font-size:.68rem;font-weight:700;cursor:pointer;transition:var(--transition);}
+  .bn-item i{font-size:1.2rem;padding:6px 20px;border-radius:16px;transition:var(--transition);}
+  .bn-item.active{color:var(--accent);}
+  .bn-item.active i{background:var(--accent);color:#fff;box-shadow:0 6px 16px var(--accent-glow);}
+  .bn-item:active i{transform:scale(.9);}
+
+  /* "More" sheet */
+  .sheet-backdrop{display:block;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);backdrop-filter:blur(3px);z-index:40;opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s;}
+  .sheet-backdrop.open{opacity:1;visibility:visible;}
+  .more-sheet{display:block;position:fixed;left:0;right:0;bottom:0;z-index:41;background:var(--surface);border-radius:28px 28px 0 0;padding:10px 18px calc(28px + env(safe-area-inset-bottom,0px));max-height:82vh;overflow-y:auto;transform:translateY(105%);transition:transform .3s ease;box-shadow:0 -12px 40px rgba(0,0,0,.4);}
+  .more-sheet.open{transform:none;}
+  .sheet-handle{width:44px;height:5px;border-radius:3px;background:var(--border);margin:6px auto 8px;}
+  .sheet-heading{font-size:.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-secondary);font-weight:700;margin:16px 4px 10px;}
+  .sheet-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .sheet-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:14px 6px;min-height:88px;border-radius:18px;background:var(--surface-light);border:1px solid var(--border);color:var(--text);font-size:.72rem;font-weight:600;text-align:center;line-height:1.25;cursor:pointer;transition:var(--transition);}
+  .sheet-tile i{font-size:1.35rem;color:var(--accent);}
+  .sheet-tile.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .sheet-tile.active i{color:#fff;}
+  .sheet-install{width:100%;margin-top:18px;min-height:48px;}
+
+  /* install banner */
+  .install-banner.show{display:flex;position:fixed;left:12px;right:12px;bottom:calc(92px + env(safe-area-inset-bottom,0px));z-index:35;align-items:center;gap:12px;padding:12px 12px 12px 14px;border-radius:20px;background:linear-gradient(135deg,#2563eb,#6366f1);color:#fff;box-shadow:0 12px 32px rgba(37,99,235,.5);animation:fadeIn .3s ease;}
+  .ib-icon{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+  .ib-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;}
+  .ib-text strong{font-size:.9rem;font-weight:800;}
+  .ib-text span{font-size:.72rem;opacity:.9;line-height:1.3;}
+  .ib-btn{background:#fff;color:#1e40af;border:none;border-radius:12px;padding:10px 16px;font-weight:800;font-size:.8rem;cursor:pointer;}
+  .ib-close{background:none;border:none;color:#fff;opacity:.8;width:30px;height:30px;cursor:pointer;}
+}
 </style>
 </head>
 <body>
+
+<!-- ========== SPLASH (installed app only) ========== -->
+<div id="splash"><div class="splash-logo"><i class="fas fa-network-wired"></i></div><div class="splash-name">IT<span>Ops</span>Center</div><div class="splash-sub">Network Engineer Workspace</div></div>
 
 <!-- ========== SIDEBAR ========== -->
 <aside class="sidebar" id="sidebar">
@@ -216,6 +313,7 @@ tr:hover td{background:var(--surface-light);}
 <!-- ========== MAIN ========== -->
 <div class="main">
   <div class="topbar">
+    <div class="app-title"><div class="logo-icon"><i class="fas fa-network-wired"></i></div><span id="appTitleText">IT Ops Center</span></div>
     <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
     <div class="search-wrapper">
       <i class="fas fa-search"></i>
@@ -229,6 +327,23 @@ tr:hover td{background:var(--surface-light);}
     </div>
   </div>
   <div class="content" id="content"></div>
+</div>
+
+<!-- ========== PHONE APP CHROME ========== -->
+<nav class="bottom-nav" id="bottomNav">
+  <button class="bn-item active" data-page="dashboard"><i class="fas fa-th-large"></i><span>Home</span></button>
+  <button class="bn-item" data-page="tools"><i class="fas fa-calculator"></i><span>Tools</span></button>
+  <button class="bn-item" data-page="interview"><i class="fas fa-bolt"></i><span>Practice</span></button>
+  <button class="bn-item" data-page="cisco"><i class="fas fa-terminal"></i><span>Cisco</span></button>
+  <button class="bn-item" id="bnMore"><i class="fas fa-ellipsis-h"></i><span>More</span></button>
+</nav>
+<div class="sheet-backdrop" id="sheetBackdrop"></div>
+<div class="more-sheet" id="moreSheet"></div>
+<div class="install-banner" id="installBanner">
+  <div class="ib-icon"><i class="fas fa-download"></i></div>
+  <div class="ib-text"><strong>Install IT Ops Center</strong><span id="ibSub">Add to your home screen for the full app experience</span></div>
+  <button class="ib-btn" id="ibInstall">Install</button>
+  <button class="ib-close" id="ibClose" aria-label="Dismiss"><i class="fas fa-times"></i></button>
 </div>
 
 <!-- ========== MODAL ========== -->
@@ -3430,6 +3545,136 @@ document.getElementById('modalOverlay')?.addEventListener('click',e=>{
 /* ============================================================
    INIT
    ============================================================ */
+/* ============================================================
+   PHONE-APP LAYER: bottom nav, More sheet, back button, install
+   banner, offline toasts, touch support for Diagram Builder
+   ============================================================ */
+(function(){
+  const standalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
+  const isMobile=()=>window.matchMedia('(max-width:900px)').matches;
+  const mainPages=['dashboard','tools','interview','cisco'];
+  const labels={};
+  document.querySelectorAll('.sidebar .nav-item').forEach(n=>{labels[n.dataset.page]=n.textContent.trim();});
+  const sheet=document.getElementById('moreSheet');
+  const backdrop=document.getElementById('sheetBackdrop');
+
+  function buildSheet(){
+    let html='<div class="sheet-handle"></div>',open=false;
+    document.querySelectorAll('.sidebar > *').forEach(el=>{
+      if(el.classList.contains('nav-section')){
+        if(open)html+='</div>';
+        html+='<div class="sheet-heading">'+el.textContent+'</div><div class="sheet-grid">';open=true;
+      }else if(el.classList.contains('nav-item')){
+        const ic=el.querySelector('i');
+        html+='<button class="sheet-tile" data-page="'+el.dataset.page+'"><i class="'+(ic?ic.className:'')+'"></i><span>'+el.textContent.trim()+'</span></button>';
+      }
+    });
+    if(open)html+='</div>';
+    html+='<div id="sheetInstall"></div>';
+    sheet.innerHTML=html;
+  }
+  function openSheet(){sheet.classList.add('open');backdrop.classList.add('open');}
+  function closeSheet(){sheet.classList.remove('open');backdrop.classList.remove('open');}
+  buildSheet();
+  if(isMobile()){const gs=document.getElementById('globalSearch');if(gs)gs.placeholder='Search commands, tools, notes...';}
+
+  function syncChrome(page){
+    document.querySelectorAll('.bn-item[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
+    const more=document.getElementById('bnMore');
+    if(more)more.classList.toggle('active',!mainPages.includes(page));
+    sheet.querySelectorAll('.sheet-tile').forEach(t=>t.classList.toggle('active',t.dataset.page===page));
+    const t=document.getElementById('appTitleText');
+    if(t)t.textContent=(page==='dashboard'||!labels[page])?'IT Ops Center':labels[page];
+  }
+
+  /* wrap navigateTo: sync chrome + Android back-button history */
+  const _nav=navigateTo;
+  navigateTo=function(page,fromPop){
+    _nav(page);
+    syncChrome(page);
+    closeSheet();
+    if(fromPop!==true){
+      try{if(!(history.state&&history.state.page===page))history.pushState({page:page},'');}catch(e){}
+    }
+  };
+  try{history.replaceState({page:'dashboard'},'');}catch(e){}
+  window.addEventListener('popstate',e=>{
+    navigateTo((e.state&&e.state.page)||'dashboard',true);
+  });
+
+  document.getElementById('bottomNav').addEventListener('click',e=>{
+    const b=e.target.closest('.bn-item');if(!b)return;
+    if(navigator.vibrate)try{navigator.vibrate(10);}catch(err){}
+    if(b.id==='bnMore'){sheet.classList.contains('open')?closeSheet():openSheet();return;}
+    navigateTo(b.dataset.page);
+  });
+  sheet.addEventListener('click',e=>{
+    const t=e.target.closest('.sheet-tile');
+    if(t)navigateTo(t.dataset.page);
+  });
+  backdrop.addEventListener('click',closeSheet);
+  syncChrome('dashboard');
+
+  /* ---- install banner ---- */
+  let deferred=null;
+  const banner=document.getElementById('installBanner');
+  const dismissed=()=>{try{return localStorage.getItem('installDismissed')==='1';}catch(e){return false;}};
+  const hideBanner=()=>banner.classList.remove('show');
+  function addSheetInstall(){
+    const box=document.getElementById('sheetInstall');
+    if(!box||!deferred||standalone)return;
+    box.innerHTML='<button class="btn btn-primary sheet-install" id="sheetInstallBtn"><i class="fas fa-download"></i> Install App</button>';
+    document.getElementById('sheetInstallBtn').addEventListener('click',doInstall);
+  }
+  function doInstall(){
+    if(!deferred)return;
+    deferred.prompt();
+    deferred.userChoice.then(()=>{deferred=null;hideBanner();closeSheet();const b=document.getElementById('sheetInstall');if(b)b.innerHTML='';});
+  }
+  window.addEventListener('beforeinstallprompt',e=>{
+    e.preventDefault();deferred=e;
+    if(!standalone&&!dismissed()&&isMobile())banner.classList.add('show');
+    addSheetInstall();
+  });
+  window.addEventListener('appinstalled',()=>{deferred=null;hideBanner();showToast('App installed');});
+  document.getElementById('ibInstall').addEventListener('click',doInstall);
+  document.getElementById('ibClose').addEventListener('click',()=>{hideBanner();try{localStorage.setItem('installDismissed','1');}catch(e){}});
+  if(/iphone|ipad|ipod/i.test(navigator.userAgent)&&!standalone&&!dismissed()&&isMobile()){
+    document.getElementById('ibSub').textContent='Tap the Share button, then "Add to Home Screen"';
+    document.getElementById('ibInstall').style.display='none';
+    setTimeout(()=>banner.classList.add('show'),2500);
+  }
+
+  /* ---- online / offline ---- */
+  window.addEventListener('offline',()=>showToast('You are offline — app keeps working','warning'));
+  window.addEventListener('online',()=>showToast('Back online'));
+
+  /* ---- splash (only visible when installed) ---- */
+  window.addEventListener('load',()=>{
+    const sp=document.getElementById('splash');
+    if(!sp)return;
+    setTimeout(()=>{sp.classList.add('hide');setTimeout(()=>sp.remove(),500);},standalone?700:0);
+  });
+
+  /* ---- touch drag for Diagram Builder (it was mouse-only) ---- */
+  document.addEventListener('touchstart',e=>{
+    const node=e.target.closest&&e.target.closest('.diagram-node');
+    if(!node||e.target.closest('button'))return;
+    const t=e.touches[0];
+    node.dispatchEvent(new MouseEvent('mousedown',{bubbles:true,cancelable:true,clientX:t.clientX,clientY:t.clientY}));
+    const move=ev=>{const p=ev.touches[0];document.dispatchEvent(new MouseEvent('mousemove',{clientX:p.clientX,clientY:p.clientY}));};
+    const end=()=>{
+      document.dispatchEvent(new MouseEvent('mouseup'));
+      node.removeEventListener('touchmove',move);
+      node.removeEventListener('touchend',end);
+      node.removeEventListener('touchcancel',end);
+    };
+    node.addEventListener('touchmove',move,{passive:true});
+    node.addEventListener('touchend',end);
+    node.addEventListener('touchcancel',end);
+  },{passive:true});
+})();
+
 /* ============================================================
    PWA: shortcut deep-links (?page=...&section=...) + Service Worker
    ============================================================ */
